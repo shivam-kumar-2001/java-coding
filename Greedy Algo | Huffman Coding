@@ -1,3 +1,5 @@
+//Huffman coding is a lossless data compression algorithm.
+
 // sort by frequency
 // create new node and store frequency of two smallest character sum and delete the smallest fewquency and add newNode.
 // repeate this until size > 1.
