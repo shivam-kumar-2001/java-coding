@@ -1,0 +1,35 @@
+Return the maximum number of pairs that can be formed from the array words.
+Input: words = ["ab","ba","cc"]
+Output: 1(0,1)
+
+class Solution {
+    public int maximumNumberOfStringPairs(String[] words) {
+        int ans=0;
+        HashMap<String,Integer> h = new HashMap<String,Integer>();
+        for(int i=0;i<words.length;i++)
+        {
+            words[i]=sortString(words[i]);
+        }
+        for(int i=0; i<words.length; i++){
+            if(h.containsKey(words[i])){
+                h.put(words[i], h.get(words[i]) + 1);
+            } else {
+                h.put(words[i], 1);
+            }
+        }
+       for (Map.Entry<String,Integer> entry : h.entrySet()) {
+            // System.out.println("Key = " + entry.getKey() +", Value = " + entry.getValue());
+            if(entry.getValue()>1)
+            {
+                ans++;
+            }
+    }
+        return ans;
+    }
+    public String sortString(String inputString)
+    {
+        char tempArray[] = inputString.toCharArray();
+        Arrays.sort(tempArray);
+        return new String(tempArray);
+    }
+}
