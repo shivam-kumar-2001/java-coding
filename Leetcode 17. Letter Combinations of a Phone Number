@@ -1,0 +1,36 @@
+Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. Return the answer
+in any order.
+Input: digits = "23"
+Output: ["ad","ae","af","bd","be","bf","cd","ce","cf"]
+
+
+class Solution {
+public:
+    vector<string> letterCombinations(string digits) {
+        vector<string> dict= {"", "", "abc", "def", "ghi","jkl", "mno","pqrs", "tuv", "wxyz"};
+        vector<string> ans;
+        int n=digits.size();
+        if(n==0)
+        {
+            return ans;
+        }
+        helper(0,n,digits,dict,ans,"");
+        return ans;
+    }
+
+    void helper(int idx,int n,string digits,vector<string> dict,vector<string>& ans,string temp)
+    {
+        if(idx==n)
+        {
+            ans.push_back(temp);
+            return;
+        }
+        string val=dict[digits[idx]-'0'];
+        for(int i=0;i<val.size();i++)
+        {
+            temp+=val[i];
+            helper(idx+1,n,digits,dict,ans,temp);
+            temp.pop_back();
+        }
+    }
+};
