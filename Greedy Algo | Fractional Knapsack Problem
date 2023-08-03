@@ -1,0 +1,116 @@
+Given the weights and profits of N items, in the form of {profit, weight} put these items in a knapsack of capacity W to get the maximum total profit
+in the knapsack. In Fractional Knapsack, we can break items for maximizing the total value of the knapsack.
+
+Input: arr[] = {{60, 10}, {100, 20}, {120, 30}}, W = 50
+Output: 240 
+
+Follow the given steps to solve the problem using the above approach:
+
+Calculate the ratio (profit/weight) for each item.
+Sort all the items in decreasing order of the ratio.
+Initialize res = 0, curr_cap = given_cap.
+Do the following for every item i in the sorted order:
+If the weight of the current item is less than or equal to the remaining capacity then add the value of that item into the result
+Else add the current item as much as we can and break out of the loop.
+Return res.
+
+Java code :
+
+import java.io.*;
+import java.lang.*;
+import java.util.*;
+
+class Item {
+	int profit, weight;
+	Item(int pt, int wt) {
+		this.profit = pt;
+		this.weight = wt;
+	}
+}
+class myComparator implements Comparator<Item> {
+
+	public int compare(Item a1, Item a2) {
+		double x1 = (double)a1.profit / (double)a1.weight;
+		double x2 = (double)a2.profit / (double)a2.weight;
+		return x1 < x2 ? 1 : -1;
+	}
+}
+
+class sample {
+	public static void main(String[] args) {
+		Item arr[] = { new Item(60, 10), new Item(100, 20), new Item(120, 30)};
+		myComparator cmp = new myComparator();
+		Arrays.sort(arr, cmp);
+		int w = 50;
+
+		System.out.println(fractionalKnapsack(arr, w));
+	}
+	public static double fractionalKnapsack(Item arr[], int w) {
+		double ans = 0;
+		for (int i = 0; i < 3; i++) {
+			if (w > arr[i].weight) {
+				w = w - arr[i].weight;
+				ans += (double)arr[i].profit;
+			} else {
+				double frc = (double)arr[i].profit * ((double)w / (double)arr[i].weight);
+				ans += frc;
+				break;
+			}
+		}
+		return ans;
+	}
+}
+
+
+c++ code :
+#include <bits/stdc++.h>
+#include<iostream>
+#include<vector>
+#define ll long long int
+using namespace std;
+
+class Item {
+public:
+    int profit, weight;
+    Item(int pt, int wt)
+    {
+        this->profit = pt;
+        this->weight = wt;
+    }
+};
+static bool cmp(Item a1, Item a2)
+{
+    double x1 = (double)a1.profit / (double)a1.weight;
+    double x2 = (double)a2.profit / (double)a2.weight;
+    return x1 > x2;
+}
+
+double fractionKnapsack(Item arr[], int w)
+{
+    double ans = 0.0d;
+    for (int i = 0; i < 3; i++)
+    {
+        if (w > arr[i].weight)
+        {
+            w = w - arr[i].weight;
+            ans += (double)arr[i].profit;
+        }
+        else
+        {
+            double frc = (double)arr[i].profit * ((double)w / (double)arr[i].weight);
+            ans += frc;
+            break;
+        }
+    }
+    return ans;
+}
+
+int main()
+{
+    Item arr[] = {{60, 10}, {100, 20}, {120, 30}};
+    int w = 50;
+    sort(arr, arr + 3, cmp);
+
+    cout << fractionKnapsack(arr, w) << endl;
+    return 0;
+}
